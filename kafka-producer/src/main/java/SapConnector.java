@@ -36,6 +36,11 @@ public class SapConnector {
                     @Override
                     public void onTextMessage(WebSocket ws, String message) {
                         System.out.println("Received:" + message);
+                        GlobalVariable.receivedMessage = message + "\n this message has been changed!";
+
+                        SimpleProducer simpleProducer = new SimpleProducer();
+                        simpleProducer.produceMsg(GlobalVariable.receivedMessage);
+                        simpleProducer.closeProducer();
                     }
                 })
                 .setUserInfo(this.user, this.password)
