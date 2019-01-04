@@ -12,6 +12,8 @@ import java.util.Properties;
 
 //Create java class named "SimpleProducer"
 public class SimpleProducer {
+    private Properties props;
+    private Producer<String, String> producer;
     private static Properties setProperty() {
         Properties props = new Properties();
 
@@ -40,25 +42,18 @@ public class SimpleProducer {
         return props;
     }
 
-    public static void main(String[] args) throws Exception{
-        // Check arguments length value
-        if(args.length == 0){
-            System.out.println("Enter topic name");
-            return;
-        }
+    public SimpleProducer() {
+        this.props = setProperty();
 
-        //Assign topicName to string variable
-        String topicName = args[0].toString();
+        this.producer = new KafkaProducer<String, String>(this.props);
+    }
 
-        // create instance for properties to access producer configs
-        Properties props = setProperty();
-
-        Producer<String, String> producer = new KafkaProducer
-                <String, String>(props);
-
-        for (int i = 0; i < 10; i++)
-            producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), Integer.toString(i)));
+    public void produceMsg(String msg) {
+        this.producer.send(new ProducerRecord<String, String>("hello-kafka", msg));
         System.out.println("Message sent successfully");
-        producer.close();
+    }
+
+    public void closeProducer() {
+        this.producer.close();
     }
 }
