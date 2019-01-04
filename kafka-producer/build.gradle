@@ -16,4 +16,5 @@ dependencies {
     compile group: 'org.apache.kafka', name: 'kafka_2.11', version: '2.1.0'
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "org.slf4j:slf4j-simple:1.7.25"
+    compile 'com.neovisionaries:nv-websocket-client:2.6'
 }
